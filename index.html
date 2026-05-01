@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Engineering for Angular, React, .NET Developers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070b1a;
+      --card: rgba(255,255,255,0.08);
+      --card-strong: rgba(255,255,255,0.12);
+      --text: #ebefff;
+      --muted: #b8c2ff;
+      --accent1: #6ee7ff;
+      --accent2: #a78bfa;
+      --accent3: #22d3ee;
+      --ok: #34d399;
+      --warn: #f59e0b;
+      --bad: #f87171;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 20% 0%, #1b2260 0%, transparent 45%),
+                  radial-gradient(circle at 90% 5%, #024a77 0%, transparent 30%),
+                  var(--bg);
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      width: min(1150px, 92vw);
+      margin: 0 auto;
+      padding: 2rem 0 4rem;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      margin: 0;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient {
+      background: linear-gradient(95deg, var(--accent1), var(--accent2), var(--accent3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-top: 1rem;
+      max-width: 850px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.2rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 18px;
+      padding: 1.2rem;
+      backdrop-filter: blur(12px);
+      transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+      background: var(--card-strong);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.76rem;
+      padding: .35rem .6rem;
+      border-radius: 999px;
+      background: rgba(167, 139, 250, .15);
+      border: 1px solid rgba(167, 139, 250, .35);
+      color: #ddd5ff;
+      margin-bottom: .7rem;
+    }
+
+    h2 { font-size: 1.2rem; margin: .2rem 0 .5rem; }
+    p, li { color: #d8deff; line-height: 1.6; }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .panel {
+      border-radius: 18px;
+      padding: 1rem 1.2rem;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .panel.bad { border-left: 4px solid var(--bad); }
+    .panel.good { border-left: 4px solid var(--ok); }
+
+    pre {
+      white-space: pre-wrap;
+      margin: .4rem 0 0;
+      color: #f5f7ff;
+      background: rgba(0,0,0,.26);
+      border-radius: 12px;
+      padding: .9rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .9rem;
+      overflow-x: auto;
+    }
+
+    .template {
+      margin-top: 2rem;
+      background: linear-gradient(130deg, rgba(110,231,255,.12), rgba(167,139,250,.1));
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 20px;
+      padding: 1.2rem;
+      animation: fadeUp 1s ease both;
+    }
+
+    .media-strip {
+      margin-top: 1.8rem;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .media-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.05);
+      animation: fadeUp 1s ease both;
+    }
+
+    .media-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .media-card p {
+      margin: 0;
+      padding: .75rem .9rem 1rem;
+      font-size: .92rem;
+      color: #dbe2ff;
+    }
+
+    .footer-note {
+      margin-top: 2rem;
+      color: #c7cff9;
+      text-align: center;
+      opacity: .9;
+    }
+
+    .floating {
+      position: fixed;
+      inset: auto 2rem 2rem auto;
+      background: linear-gradient(120deg, var(--accent3), var(--accent2));
+      color: #04101f;
+      font-weight: 700;
+      border: none;
+      border-radius: 999px;
+      padding: .85rem 1rem;
+      box-shadow: 0 12px 24px rgba(0,0,0,.35);
+      cursor: pointer;
+      transition: transform .2s ease;
+    }
+
+    .floating:hover { transform: scale(1.04); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 780px) {
+      .compare { grid-template-columns: 1fr; }
+      .floating { right: 1rem; bottom: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="top">
+    <section class="hero">
+      <h1>Prompt Engineering for <span class="gradient">Angular, React, &amp; .NET Developers</span></h1>
+      <p class="subtitle">A bad prompt gives random answers. A great prompt gives production-ready output in one shot. Use this visual guide in your YouTube video to explain how to write better prompts and save tokens, time, and money.</p>
+    </section>
+
+    <section class="grid">
+      <article class="card"><span class="tag">Why it matters</span><h2>Prompt = Requirement Document</h2><p>AI works like a developer. If requirements are vague, the output is vague. If requirements are clear, output becomes accurate and reusable.</p></article>
+      <article class="card"><span class="tag">Efficiency</span><h2>Fewer Retries</h2><p>Most tools have token/message limits. A structured prompt helps you get better answers in fewer attempts instead of wasting 10 prompts on one small task.</p></article>
+      <article class="card"><span class="tag">Mindset</span><h2>Not Just a Question</h2><p>Think of prompting as giving a task brief: role, context, task, output format, and rules.</p></article>
+    </section>
+
+    <section class="grid" style="margin-top:1.6rem;">
+      <article class="card"><span class="tag">1. Role</span><h2>Who should AI act as?</h2><p>Example: “Act as a senior Angular developer.”</p></article>
+      <article class="card"><span class="tag">2. Context</span><h2>Project background</h2><p>Stack, framework version, issue details, constraints. This is often the most important part.</p></article>
+      <article class="card"><span class="tag">3. Task</span><h2>Exact outcome</h2><p>Mention what you want and what you do <strong>not</strong> want. Be specific.</p></article>
+      <article class="card"><span class="tag">4. Output format</span><h2>How response should look</h2><p>Code first then explanation? Folder structure first? Step-by-step? Specify it.</p></article>
+      <article class="card"><span class="tag">5. Rules</span><h2>Constraints</h2><p>Define architecture/style choices like standalone components, signals, template forms, beginner-friendly code, etc.</p></article>
+      <article class="card"><span class="tag">6. Example (optional)</span><h2>Reference input</h2><p>Paste error logs, payloads, sample component, or expected format to align output with existing project standards.</p></article>
+    </section>
+
+    <section class="media-strip" aria-label="Interactive visuals">
+      <article class="media-card">
+        <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80" alt="Developer working on laptop">
+        <p><strong>Plan first:</strong> Think of prompting like giving a feature requirement.</p>
+      </article>
+      <article class="media-card">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80" alt="Checklist notes">
+        <p><strong>Use a checklist:</strong> Role, Context, Task, Output Format, Rules, Example.</p>
+      </article>
+      <article class="media-card">
+        <img src="https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif" alt="Success GIF">
+        <p><strong>Result:</strong> Better first output with fewer retries and token waste.</p>
+      </article>
+    </section>
+
+    <section class="compare">
+      <div class="panel bad">
+        <h2>❌ Bad Prompt</h2>
+        <pre>Explain dependency injection in Angular.</pre>
+      </div>
+      <div class="panel good">
+        <h2>✅ Better Prompt</h2>
+        <pre>Act as a senior Angular developer and explain dependency injection with a real project example for a beginner.</pre>
+      </div>
+    </section>
+
+    <section class="compare">
+      <div class="panel bad">
+        <h2>❌ Bad Context</h2>
+        <pre>My API is not working. Fix it.</pre>
+      </div>
+      <div class="panel good">
+        <h2>✅ Better Context</h2>
+        <pre>I am building an Angular 17 app with .NET 8 Web API.
+Swagger works, but Angular HttpClient call fails with a CORS error.</pre>
+      </div>
+    </section>
+
+    <section class="template">
+      <h2>Final Prompt Template (Copy/Paste)</h2>
+      <pre>Act as a [ROLE].
+
+I am working on [CONTEXT].
+
+I want you to [TASK].
+
+Please give the answer in [OUTPUT FORMAT].
+
+Follow these rules:
+- [RULE 1]
+- [RULE 2]
+- [RULE 3]
+
+Here is my input/code/error:
+[PASTE HERE]</pre>
+    </section>
+
+    <section class="template" style="margin-top:1rem;">
+      <h2>Scenario: Login Page Prompt Example</h2>
+      <pre>Act as a senior Angular developer.
+I am building an Angular 17 application using standalone components and reactive forms.
+Create a login page with:
+- Email and password fields
+- Required validation
+- Email format validation
+- Password minimum 6 characters
+- Submit button disabled until form is valid
+- Loading state while API call is running
+- Error message if login fails
+
+Use clean HTML, TypeScript and CSS.
+Do not use Angular Material.
+Explain the code after giving it.</pre>
+    </section>
+
+    <p class="footer-note">✨ Pro tip for your audience: Better prompts are not longer prompts — they are clearer prompts.</p>
+  </div>
+
+  <button class="floating" onclick="window.scrollTo({top:0, behavior:'smooth'})">⬆ Back to Top</button>
+</body>
+</html>
