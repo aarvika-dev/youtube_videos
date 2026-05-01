@@ -144,7 +144,34 @@
       padding: 1.2rem;
       animation: fadeUp 1s ease both;
     }
+.media-strip {
+      margin-top: 1.8rem;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
 
+    .media-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.05);
+      animation: fadeUp 1s ease both;
+    }
+
+    .media-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .media-card p {
+      margin: 0;
+      padding: .75rem .9rem 1rem;
+      font-size: .92rem;
+      color: #dbe2ff;
+    }
     .footer-note {
       margin-top: 2rem;
       color: #c7cff9;
@@ -199,6 +226,21 @@
       <article class="card"><span class="tag">4. Output format</span><h2>How response should look</h2><p>Code first then explanation? Folder structure first? Step-by-step? Specify it.</p></article>
       <article class="card"><span class="tag">5. Rules</span><h2>Constraints</h2><p>Define architecture/style choices like standalone components, signals, template forms, beginner-friendly code, etc.</p></article>
       <article class="card"><span class="tag">6. Example (optional)</span><h2>Reference input</h2><p>Paste error logs, payloads, sample component, or expected format to align output with existing project standards.</p></article>
+    </section>
+
+    <section class="media-strip" aria-label="Interactive visuals">
+      <article class="media-card">
+        <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80" alt="Developer working on laptop">
+        <p><strong>Plan first:</strong> Think of prompting like giving a feature requirement.</p>
+      </article>
+      <article class="media-card">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80" alt="Checklist notes">
+        <p><strong>Use a checklist:</strong> Role, Context, Task, Output Format, Rules, Example.</p>
+      </article>
+      <article class="media-card">
+        <img src="https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif" alt="Success GIF">
+        <p><strong>Result:</strong> Better first output with fewer retries and token waste.</p>
+      </article>
     </section>
 
     <section class="compare">
